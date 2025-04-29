@@ -12,12 +12,19 @@ function App() {
     { input: "Learn how to web design", complete: false },
     { input: "Say hi to gran gran", complete: true },
   ]);
+
+  function handleAddTodo(newTodo) {
+    const newTodoList = [...todos, { input: newTodo, complete: false }];
+    setTodos(newTodoList);
+  }
+  function handleEditTodo() {}
+  function handleDeleteTodo() {}
   return (
     <>
       <Header todos={todos} />
       <Tabs todos={todos} />
       <TodoList todos={todos} />
-      <TodoInput />
+      <TodoInput handleAddTodo={handleAddTodo} />
     </>
   );
 }
