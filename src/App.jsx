@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Header } from "./components/Header";
 import { Tabs } from "./components/Tabs";
@@ -15,6 +15,7 @@ function App() {
   function handleAddTodo(newTodo) {
     const newTodoList = [...todos, { input: newTodo, complete: false }];
     setTodos(newTodoList);
+    handleSaveData(newTodoList);
   }
   function handleCompleteTodo(index) {
     let newTodoList = [...todos];
@@ -22,6 +23,7 @@ function App() {
     completedTodo["complete"] = true;
     newTodoList[index] = completedTodo;
     setTodos(newTodoList);
+    handleSaveData(newTodoList);
     //update/edit/modify the todo
   }
   function handleDeleteTodo(index) {
@@ -29,7 +31,21 @@ function App() {
       return valIndex !== index;
     });
     setTodos(newTodoList);
+    handleSaveData(newTodoList);
   }
+
+  function handleSaveData(currentTodos) {
+    localStorage.setItem("todo-app", JSON.stringify({ todos: currentTodos }));
+  }
+
+  useEffect(() => {
+    if (!localStorage || !localStorage.getItem("todo-app")) {
+      return;
+    }
+    let db = JSON.parse(localStorage.getItem("todo-app"));
+    setTodos(db.todos);
+  }, []);
+
   return (
     <>
       <Header todos={todos} />
