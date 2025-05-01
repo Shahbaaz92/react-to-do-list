@@ -16,10 +16,20 @@ function App() {
     const newTodoList = [...todos, { input: newTodo, complete: false }];
     setTodos(newTodoList);
   }
-  function handleCompleteTodo() {
+  function handleCompleteTodo(index) {
+    let newTodoList = [...todos];
+    let completedTodo = todos[index];
+    completedTodo["complete"] = true;
+    newTodoList[index] = completedTodo;
+    setTodos(newTodoList);
     //update/edit/modify the todo
   }
-  function handleDeleteTodo() {}
+  function handleDeleteTodo(index) {
+    let newTodoList = todos.filter((val, valIndex) => {
+      return valIndex !== index;
+    });
+    setTodos(newTodoList);
+  }
   return (
     <>
       <Header todos={todos} />
@@ -28,7 +38,12 @@ function App() {
         setSelectedTab={setSelectedTab}
         todos={todos}
       />
-      <TodoList selectedTab={selectedTab} todos={todos} />
+      <TodoList
+        handleDeleteTodo={handleDeleteTodo}
+        handleCompleteTodo={handleCompleteTodo}
+        selectedTab={selectedTab}
+        todos={todos}
+      />
       <TodoInput handleAddTodo={handleAddTodo} />
     </>
   );
