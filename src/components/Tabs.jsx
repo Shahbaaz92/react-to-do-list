@@ -1,4 +1,4 @@
-export function Tabs({ todos }) {
+export function Tabs({ todos, selectedTab, setSelectedTab }) {
   const tabs = ["All", "Active", "Completed"];
   return (
     <nav>
@@ -11,12 +11,19 @@ export function Tabs({ todos }) {
             : todos.filter((todo) => todo.complete).length;
 
         return (
-          <button key={tabIndex} className="tab-button">
+          <button
+            onClick={() => setSelectedTab(tab)}
+            key={tabIndex}
+            className={
+              "tab-button " + (tab === selectedTab ? " tab-selected" : "")
+            }
+          >
             {tab}
             <span>({numOfTasks})</span>
           </button>
         );
       })}
+      <hr />
     </nav>
   );
 }

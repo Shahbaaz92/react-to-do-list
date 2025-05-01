@@ -19,7 +19,7 @@ export function TodoInput({ handleAddTodo }) {
         onClick={() => {
           if (!inputValue) return;
           handleAddTodo(inputValue);
-          setInputValue("");
+          setInputValue(" ");
         }}
       >
         <i className="fa-solid fa-plus"></i>
